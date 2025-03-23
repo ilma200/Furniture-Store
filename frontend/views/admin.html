@@ -1,177 +1,30 @@
+
+<body>
 <div class="container mt-5">
-  <h2 class="text-center mb-4 text-warning">Admin Panel: Add New Product</h2>
-
-  <!-- Forma za dodavanje proizvoda -->
-  <form class="text-light border p-4 rounded" style="border-color: #996b0e;">
-    <div class="mb-3">
-      <label for="productName" class="form-label">Product Name</label>
-      <input type="text" class="form-control" id="productName" placeholder="Enter product name">
-    </div>
-
-    <div class="mb-3">
-      <label for="productDescription" class="form-label">Description</label>
-      <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label for="productMaterial" class="form-label">Material</label>
-      <input type="text" class="form-control" id="productMaterial" placeholder="e.g. Glass, Wood, Ceramic">
-    </div>
-
-    <div class="mb-3">
-      <label for="productColor" class="form-label">Color</label>
-      <input type="text" class="form-control" id="productColor" placeholder="e.g. Beige, Black">
-    </div>
-
-    <div class="mb-3">
-      <label for="productWeight" class="form-label">Weight (g)</label>
-      <input type="number" class="form-control" id="productWeight" placeholder="Enter weight in grams">
-    </div>
-
-    <div class="mb-3">
-      <label for="productPrice" class="form-label">Price ($)</label>
-      <input type="number" class="form-control" id="productPrice" placeholder="Enter product price">
-    </div>
-
-    <div class="mb-3">
-      <label for="productQuantity" class="form-label">Quantity</label>
-      <input type="number" class="form-control" id="productQuantity" placeholder="Enter quantity in stock">
-    </div>
-
-    <div class="mb-3">
-      <label for="productImage" class="form-label">Product Image</label>
-      <input type="file" class="form-control file-input" id="productImage">
-    </div>
-
-    <button type="submit" class="btn btn-custom">Add Product</button>
-  </form>
-
-  <!-- Tabela sa proizvodima -->
-  <div class="mt-5">
-    <h4 class="text-warning">Product List</h4>
-    <div class="table-responsive">
-      <table class="table table-dark table-bordered text-light">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Material</th>
-            <th>Color</th>
-            <th>Weight</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Aromatherapy Candle</td>
-            <td>Lavender-scented soy candle</td>
-            <td>Soy Wax</td>
-            <td>White</td>
-            <td>250</td>
-            <td>$14.99</td>
-            <td>25</td>
-            <td><img src="https://via.placeholder.com/50" alt="product" class="img-thumbnail" width="50"></td>
-            <td>
-              <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-              <button class="btn btn-sm btn-outline-danger">Delete</button>
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Decorative Vase</td>
-            <td>Elegant ceramic vase</td>
-            <td>Ceramic</td>
-            <td>Beige</td>
-            <td>1200</td>
-            <td>$29.99</td>
-            <td>10</td>
-            <td><img src="https://via.placeholder.com/50" alt="product" class="img-thumbnail" width="50"></td>
-            <td>
-              <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-              <button class="btn btn-sm btn-outline-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h2 class="text-center mb-4">Admin Panel: Add New Product</h2>
+  
+    <form class="text-light">
+      <div class="mb-3">
+        <label for="productName" class="form-label">Product Name</label>
+        <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+      </div>
+  
+      <div class="mb-3">
+        <label for="productDescription" class="form-label">Description</label>
+        <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+      </div>
+  
+      <div class="mb-3">
+        <label for="productPrice" class="form-label">Price ($)</label>
+        <input type="number" class="form-control" id="productPrice" placeholder="Enter product price">
+      </div>
+  
+      <div class="mb-3">
+        <label for="productImage" class="form-label">Image URL</label>
+        <input type="url" class="form-control" id="productImage" placeholder="https://example.com/image.jpg">
+      </div>
+  
+      <button type="submit" class="btn btn-custom">Add Product</button>
+    </form>
   </div>
-</div>
-
-<!-- Modal za Edit -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content bg-dark text-light border-warning">
-      <div class="modal-header">
-        <h5 class="modal-title text-warning" id="editModalLabel">Edit Product</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="editName" class="form-label">Product Name</label>
-              <input type="text" class="form-control" id="editName">
-            </div>
-            <div class="col-md-6">
-              <label for="editMaterial" class="form-label">Material</label>
-              <input type="text" class="form-control" id="editMaterial">
-            </div>
-            <div class="col-md-6">
-              <label for="editColor" class="form-label">Color</label>
-              <input type="text" class="form-control" id="editColor">
-            </div>
-            <div class="col-md-6">
-              <label for="editWeight" class="form-label">Weight (g)</label>
-              <input type="number" class="form-control" id="editWeight">
-            </div>
-            <div class="col-md-6">
-              <label for="editPrice" class="form-label">Price ($)</label>
-              <input type="number" class="form-control" id="editPrice">
-            </div>
-            <div class="col-md-6">
-              <label for="editQuantity" class="form-label">Quantity</label>
-              <input type="number" class="form-control" id="editQuantity">
-            </div>
-            <div class="col-12">
-              <label for="editDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="editDescription" rows="3"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="editImage" class="form-label">Product Image</label>
-              <input type="file" class="form-control file-input" id="editImage">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-custom">Save Changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-  .file-input {
-    padding: 10px;
-    background-color: #1c1c1c;
-    color: #d8c38e;
-    border: 1px solid #996b0e;
-    border-radius: 5px;
-  }
-  .file-input::file-selector-button {
-    background-color: #996b0e;
-    color: #000;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-</style>
+  
