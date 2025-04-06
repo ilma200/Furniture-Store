@@ -1,9 +1,9 @@
 <?php
 require_once 'BaseDao.php';
 
-class UserDao extends BaseDao {
+class ProductDao extends BaseDao {
     public function __construct() {
-        parent::__construct("user");
+        parent::__construct("product");
     }
 
     public function create($data) {
@@ -14,12 +14,16 @@ class UserDao extends BaseDao {
         return $this->update($id, $data);
     }
 
-    public function deleteUser($id) {
+    public function deleteProduct($id) {
         return $this->delete($id);
     }
 
-    public function getUserById($id) {
+    public function getProductById($id) {
         return $this->getById($id);
+    }
+    
+    public function getAllProducts() {
+        return $this->getAll();
     }
     
 }
