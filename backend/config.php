@@ -1,10 +1,29 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL ^ (E_NOTICE | E_DEPRECATED));
+class Database {
+   private static $host = 'localhost';
+   private static $dbName = 'newweb';
+   private static $username = 'root';
+   private static $password = '';
+   private static $connection = null;
 
-define('DB_NAME', '');
-define('DB_PORT', '3306');
-define('DB_USER', 'root');
-define('DB_PASSWRD', '');
-define('DB_HOST', '127.0.0.1');
+
+   public static function connect() {
+       if (self::$connection === null) {
+           try {
+               self::$connection = new PDO(
+                   "mysql:host=" . self::$host . ";dbname=" . self::$dbName,
+                   self::$username,
+                   self::$password,
+                   [
+                       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                   ]
+               );
+           } catch (PDOException $e) {
+               die("Connection failed: " . $e->getMessage());
+           }
+       }
+       return self::$connection;
+   }
+}
+?>
