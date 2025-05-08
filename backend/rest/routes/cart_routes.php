@@ -63,7 +63,7 @@ Flight::route('POST /cart', function() {
         isset($data['product_id']) ? $data['product_id'] : null,
         isset($data['quantity']) ? $data['quantity'] : null
     );
-
+//change to merge
     if (!is_array($response) || !isset($response['success'])) {
         Flight::halt(500, "Unexpected error");
     }
