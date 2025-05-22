@@ -7,7 +7,7 @@
               <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5 text-warning">Log in to your account</h2>
   
-                <form>
+                <form id = "loginForm">
                   <div class="form-outline mb-4">
                     <input type="email" id="loginEmail" class="form-control form-control-lg" />
                     <label class="form-label" for="loginEmail">Email</label>
@@ -37,3 +37,48 @@
   </section>
   
   
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+      event.preventDefault(); // prevent page reload
+    
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+    
+      if (!email || !password) {
+        alert("Please fill in both email and password.");
+        return;
+      }
+    
+      try {
+        const response = await fetch("http://localhost/FurnitureStore/backend/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+    
+        if (!response.ok) {
+          const errorText = await response.text();
+          alert("Login failed: " + errorText);
+          return;
+        }
+    
+        const data = await response.json();
+        alert("Login successful! Token: " + data.token);
+    
+        // Save token for later authenticated requests
+        localStorage.setItem("token", data.token);
+        window.localStorage.setItem("user_id", data.id);
+        window.localStorage.setItem("user", data.username);
+    
+        // Redirect to dashboard or home page
+        window.location.href = "#dashboard";
+    
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+    </script>
+    

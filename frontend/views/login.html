@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <a href="#dashboard" class="btn custom-btn btn-lg">Register</a>
+                  <button type="submit" class="btn custom-btn btn-lg">Register</button>
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">
@@ -59,3 +59,63 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('form3Example1cg').value.trim();
+  const email = document.getElementById('form3Example3cg').value.trim();
+  const password = document.getElementById('form3Example4cg').value;
+  const repeat_password_signup = document.getElementById('form3Example4cdg').value;
+  const roleName = document.getElementById('userRole').value;
+
+  let role_id = 1; // default Buyer
+  if (roleName.toLowerCase() === 'admin') {
+    role_id = 2;
+  }
+
+  if (!name || !email || !password || !repeat_password_signup) {
+    alert('Please fill all fields.');
+    return;
+  }
+  if (password !== repeat_password_signup) {
+    alert('Passwords do not match!');
+    return;
+  }
+
+  try {
+    // Register the user first
+    const registerResponse = await fetch('http://localhost/FurnitureStore/backend/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, repeat_password_signup, role_id })
+    });
+
+    const registerData = await registerResponse.json();
+    if (!registerResponse.ok) throw new Error(registerData.message || 'Registration failed');
+
+    // Registration success, now login automatically
+    const loginResponse = await fetch('http://localhost/FurnitureStore/backend/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const loginData = await loginResponse.json();
+    if (!loginResponse.ok) throw new Error(loginData.message || 'Login failed');
+
+    // Save to localStorage (adjust keys based on your actual response)
+    localStorage.setItem("token", loginData.token);
+    localStorage.setItem("user_id", loginData.id);
+    localStorage.setItem("user", loginData.name);
+
+    // Redirect to dashboard
+    window.location.href = "#dashboard";
+
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+});
+
+</script>
