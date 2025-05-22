@@ -7,10 +7,20 @@ class BaseDao {
    protected $connection;
 
 
-   public function __construct($table) {
-       $this->table = $table;
-       $this->connection = Database::connect();
-   }
+   public function __construct($table)
+    {
+        $this->table = $table;
+        try {
+            $this->connection = new PDO("mysql:host=" . Config::DB_HOST() . ";dbname=" . Config::DB_NAME() . ";charset=utf8;port=" . Config::DB_PORT(), Config::DB_USER(), Config::DB_PASSWORD(), [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
+        } catch (PDOException $e) {
+            print_r($e);
+            throw $e;
+        }
+    }
+
 
 
    public function getAll() {
@@ -55,5 +65,16 @@ class BaseDao {
        $stmt->bindParam(':id', $id);
        return $stmt->execute();
    }
+
+   public  function query($query, $params) {
+    $statement = $this->connection->prepare($query);
+    $statement->execute($params);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public  function query_unique($query, $params) {
+    $results = $this->query($query, $params);
+    return reset($results);
+}
 }
 ?>
