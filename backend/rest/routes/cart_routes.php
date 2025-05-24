@@ -8,6 +8,7 @@ Flight::set('cart_service', new CartService());
 
 
 Flight::route('POST /cart', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $user_id = isset($data['user_id']) ? $data['user_id'] : null;
 
@@ -32,6 +33,7 @@ Flight::route('POST /cart', function() {
 
 // EDIT cart item
 Flight::route('PUT /cart', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $user_id = isset($data['user_id']) ? $data['user_id'] : null;
 
@@ -56,6 +58,7 @@ Flight::route('PUT /cart', function() {
 
 // DELETE cart item
 Flight::route('DELETE /cart', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
 
     $response = Flight::get('cart_service')->delete_cart_item(
@@ -78,6 +81,7 @@ Flight::route('DELETE /cart', function() {
 
 // GET all cart items for a user
 Flight::route('GET /cart/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('cart_service')->get_cart_by_user($id);
 
     if (!is_array($response) || !isset($response['success'])) {

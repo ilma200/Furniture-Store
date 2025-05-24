@@ -7,6 +7,7 @@ require_once __DIR__ . '/../services/ItemInOrderService.php';
 Flight::set('item_in_order_service', new ItemInOrderService());
 
 Flight::route('POST /item', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
 
     $response = Flight::get('item_in_order_service')->add_item_to_order(
@@ -31,6 +32,7 @@ Flight::route('POST /item', function() {
 
 // EDIT item in order
 Flight::route('PUT /item', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
 
     $response = Flight::get('item_in_order_service')->edit_item_in_order(
@@ -55,6 +57,7 @@ Flight::route('PUT /item', function() {
 
 // DELETE item from order
 Flight::route('DELETE /item', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
 
     $response = Flight::get('item_in_order_service')->delete_item_in_order(
@@ -78,6 +81,7 @@ Flight::route('DELETE /item', function() {
 
 // GET all items by order ID
 Flight::route('GET /items/@order_id', function($order_id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('item_in_order_service')->get_items_by_order($order_id);
 
     if (!is_array($response) || !isset($response['success'])) {

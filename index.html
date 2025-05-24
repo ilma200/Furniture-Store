@@ -52,22 +52,19 @@
         <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li class="nav-item" id = "nav-dashbboard">
               <a class="nav-link" href="#dashboard">Dashboard</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id = "nav-browse">
               <a class="nav-link" href="#browse">Browse</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id = "nav-wishlist">
               <a class="nav-link" href="#wishlist">Wishlist</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#admin">Admin</a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item" id =  "nav-profile">
               <a class="nav-link" href="#profile">Profile</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id = "nav-cart">
               <a class="nav-link" href="#cart">
                 <i class="bi bi-cart-fill"></i> Cart
             
@@ -126,6 +123,58 @@
 <script>
     Utils.init_spapp();
 </script>
+
+<script>
+function updateNavbarVisibility() {
+  const currentHash = window.location.hash;
+  const user = JSON.parse(localStorage.getItem("user_data"));
+  const isAdmin = user && Number(user.role_id) == 2;
+  const isAdminDashboard = currentHash === "#admin";
+
+  const shouldHide = isAdmin || isAdminDashboard;
+
+  const elementsToHide = [
+    "nav-browse",
+    "nav-wishlist",
+    "nav-cart"
+  ];
+
+  elementsToHide.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = shouldHide ? "none" : "";
+    }
+  });
+
+  const header = document.querySelector("header");
+  if (header) {
+    if (currentHash === "#login" || currentHash === "#signin") {
+      header.style.display = "none";
+    } else {
+      header.style.display = "";
+    }
+  }
+}
+
+updateNavbarVisibility();
+
+window.addEventListener("hashchange", updateNavbarVisibility);
+</script>
+
+
+<script>
+  const user = JSON.parse(localStorage.getItem("user_data"));
+  console.log(user.role_id)
+  if (user && user.role_id == 2) {
+    const dashboardLink = document.querySelector('#nav-dashbboard a');
+    if (dashboardLink) {
+      dashboardLink.setAttribute('href', '#admin');
+      dashboardLink.textContent = 'Admin Dashboard';
+    }
+  }
+</script>
+
+
 
 <script src="frontend/utils/rest_client.js"></script>
 </body>

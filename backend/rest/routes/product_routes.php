@@ -9,6 +9,7 @@ Flight::set('product_service', new ProductService());
 
 // CREATE product
 Flight::route('POST /product', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('product_service')->create_product($data);
 
@@ -29,6 +30,7 @@ Flight::route('POST /product', function() {
 
 // EDIT product
 Flight::route('PUT /product/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('product_service')->edit_product($id, $data);
 
@@ -49,6 +51,7 @@ Flight::route('PUT /product/@id', function($id) {
 
 // DELETE product
 Flight::route('DELETE /product/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $response = Flight::get('product_service')->delete_product($id);
 
     if (!is_array($response) || !isset($response['success'])) {
@@ -68,6 +71,7 @@ Flight::route('DELETE /product/@id', function($id) {
 
 // GET product by ID
 Flight::route('GET /product/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('product_service')->get_product_by_id($id);
 
     if (!is_array($response) || !isset($response['success'])) {
@@ -87,6 +91,7 @@ Flight::route('GET /product/@id', function($id) {
 
 // GET all products
 Flight::route('GET /products', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('product_service')->get_all_products();
 
     if (!is_array($response) || !isset($response['success'])) {

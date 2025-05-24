@@ -70,10 +70,16 @@
         // Save token for later authenticated requests
         localStorage.setItem("token", data.token);
         window.localStorage.setItem("user_id", data.id);
-        window.localStorage.setItem("user", data.username);
+        window.localStorage.setItem("user_data", JSON.stringify(data));
     
         // Redirect to dashboard or home page
         window.location.href = "#dashboard";
+
+        if (data.role_id == 1) {
+          window.location.hash = "#dashboard";
+            } else {
+        window.location.hash = "#admin";
+          }
     
       } catch (error) {
         console.error("Login error:", error);

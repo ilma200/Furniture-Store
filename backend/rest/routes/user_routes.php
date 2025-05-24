@@ -8,6 +8,7 @@ Flight::set('user_service', new UserService());
 
 
 Flight::route('POST /user', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('user_service')->create_user($data);
 
@@ -27,6 +28,7 @@ Flight::route('POST /user', function() {
 
 // EDIT user
 Flight::route('PUT /user/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('user_service')->edit_user($id, $data);
 
@@ -46,6 +48,7 @@ Flight::route('PUT /user/@id', function($id) {
 
 // DELETE user
 Flight::route('DELETE /user/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('user_service')->delete_user($id);
 
     if (!is_array($response) || !isset($response['success'])) {
@@ -64,6 +67,7 @@ Flight::route('DELETE /user/@id', function($id) {
 
 // GET user by id
 Flight::route('GET /user/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('user_service')->get_user_by_id($id);
 
     if (!is_array($response) || !isset($response['success'])) {

@@ -8,6 +8,7 @@ require_once __DIR__ . '/../services/OrderService.php';
 Flight::set('order_service', new OrderService());
 
 Flight::route('POST /order', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('order_service')->create_order($data);
 
@@ -27,6 +28,7 @@ Flight::route('POST /order', function() {
 
 // EDIT order
 Flight::route('PUT /order/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $response = Flight::get('order_service')->edit_order($id, $data);
 
@@ -46,6 +48,7 @@ Flight::route('PUT /order/@id', function($id) {
 
 // DELETE order
 Flight::route('DELETE /order/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $response = Flight::get('order_service')->delete_order($id);
 
     if (!is_array($response) || !isset($response['success'])) {
@@ -64,6 +67,7 @@ Flight::route('DELETE /order/@id', function($id) {
 
 // GET all orders
 Flight::route('GET /orders', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $response = Flight::get('order_service')->get_all_orders();
 
     if (!is_array($response) || !isset($response['success'])) {
@@ -78,6 +82,7 @@ Flight::route('GET /orders', function() {
 
 // GET orders by user
 Flight::route('GET /orders/user/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $response = Flight::get('order_service')->get_orders_by_user($id);
 
     if (!is_array($response) || !isset($response['success'])) {

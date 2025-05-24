@@ -106,9 +106,11 @@
     if (!loginResponse.ok) throw new Error(loginData.message || 'Login failed');
 
     // Save to localStorage (adjust keys based on your actual response)
+    console.log(loginData)
     localStorage.setItem("token", loginData.token);
     localStorage.setItem("user_id", loginData.id);
-    localStorage.setItem("user", loginData.name);
+    window.localStorage.setItem("user_data", JSON.stringify(loginData));
+
 
     // Redirect to dashboard
     window.location.href = "#dashboard";
